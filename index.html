@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Numberphile Dollar Game</title>
+
+    <script src="assets/jquery.min.js"></script>
+    <script src="assets/vis.min.js"></script>
+    <link href="assets/vis.min.css" rel="stylesheet">
+
+    <script src="ndg/ndg.js"></script>
+    <link href="ndg/ndg.css" rel="stylesheet">
+
+
+    <style type="text/css">
+        #content {
+            width: 600px;
+            height: 400px;
+            border: 1px solid lightgray;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Numberphile Dollar Game</h1>
+</header>
+<section class="grid-parent">
+    <div id="content" class="child">
+
+    </div>
+    <button class="child" onclick="newGraph()">New Graph</button>
+    <div class="child">
+        <label for="clickAction">
+            Select what happens when you click a node:
+        </label>
+        <select id="clickAction">
+            <option id="0">Give money to connected node</option>
+            <option id="1">Take money from connected node</option>
+        </select>
+    </div>
+    <div class="child">
+        <b>Winning conditions:<br></b>
+        Edges - Nodes + 1 <= Sum<br>
+        AND <br>
+        Sum >= 0
+    </div>
+</section>
+<footer>
+    made by Lukas Struck
+</footer>
+
+
+<script>
+
+</script>
+</body>
+</html>

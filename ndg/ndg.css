@@ -1,0 +1,14 @@
+.grid-parent {
+    display: grid;
+    grid-template-columns: 640px 200px;
+}
+
+#content {
+    grid-row: 1 /span 4;
+}
+
+.child {
+    margin: 10px;
+    width: 100%;
+}
+
