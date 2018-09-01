@@ -46,6 +46,10 @@ let tutorialGraphs = [
         nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "4"}, {id: 3, label: "3"}, {id: 4, label: "-1"}, {id: 5, label: "0"}, {id: 6, label: "1"}, {id: 7, label: "-1"}]),
         edges: new vis.DataSet([{from: 1, to: 2}, {from: 2, to: 3}, {from: 3, to: 4}, {from: 4, to: 5}, {from: 5, to: 1}, {from: 4, to: 6}, {from: 1, to: 7}]),
     },
+    {
+        nodes: new vis.DataSet([{id: 1, label: "2"}, {id: 2, label: "1"}, {id: 3, label: "1"}, {id: 4, label: "-9"}, {id: 5, label: "4"}, {id: 6, label: "4"}]),
+        edges: new vis.DataSet([{id: 2, from: 1, to: 2}, {id: 3, from: 1, to: 3}, {id: 4, from: 2, to: 4}, {id: 5, from: 3, to: 5}, {id: 6, from: 2, to: 6}])
+    }
 ];
 
 generationMethod = () => {
@@ -73,7 +77,9 @@ $(() => {
         autoResize: true,
         interaction: {
             navigationButtons: true,
-            dragNodes: false
+            dragNodes: false,
+            dragView: false,
+            zoomView: false,
         }
     };
 
@@ -118,7 +124,7 @@ function generateRandomGraph() {
         current_sum += val;
         data_nodes.push({id: i + 1, label: "" + val});
         if (i !== 0)
-            data_edges.push({id: i + 1, from: Math.floor(Math.random() * i + 1), to: i + 1})
+            data_edges.push({from: Math.floor(Math.random() * i + 1), to: i + 1})
     }
     for (let i = nodes; i < nodes + additional_edges; i++) {
         let from = Math.floor(Math.random() * nodes + 1);
@@ -126,7 +132,7 @@ function generateRandomGraph() {
         if (!data_edges.find((edge) => {
             return edge.from === from && edge.to === to || edge.to === from && edge.from === to;
         }) && from !== to) {
-            data_edges.push({id: i + 1, from: from, to: to});
+            data_edges.push({from: from, to: to});
         }
     }
     sum = current_sum;
