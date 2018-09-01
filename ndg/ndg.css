@@ -12,3 +12,14 @@
     width: 100%;
 }
 
+.form {
+    display: grid;
+    grid-template-columns: 100px 25px 100px 25px;
+    padding: 10px;
+    grid-gap: 10px;
+    align-items: end;
+}
+
+.form input {
+    height: 13px;
+}

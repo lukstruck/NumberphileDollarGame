@@ -33,18 +33,22 @@
     <button class="child" onclick="resetGraph()">Reset Graph</button>
     <div class="child">
         <label for="clickAction">
-            Select what happens when you click a node:
+            Click to toggle what happens when you click on a node:
         </label>
-        <select id="clickAction">
-            <option id="0">Give money to connected node</option>
-            <option id="1">Take money from connected node</option>
-        </select>
+        <button id="clickAction" onclick="toggleClickAction()" data-value="0">Give money to conncected node</button>
     </div>
     <div class="child">
-        <b>Winning conditions:<br></b>
+        <h3>Winning conditions:</h3>
         Edges - Nodes + 1 <= Sum<br>
         AND <br>
         Sum >= 0
+    </div>
+    <div class="child form">
+        <label for="maxNodes">Maximum nodes:</label><input id="maxNodes">
+        <label for="minNodes">Minimum nodes:</label><input id="minNodes">
+        <label for="maxAddEdges">Maximum additional edges:</label><input id="maxAddEdges">
+        <label for="valueRadius">Approximate value radius for nodes:</label><input id="valueRadius">
+        <label for="winnablePercentage">Percentage that the graph fits the win condition:</label><input id="winnablePercentage">
     </div>
 </section>
 <footer>

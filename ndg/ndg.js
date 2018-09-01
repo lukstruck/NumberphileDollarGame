@@ -1,9 +1,22 @@
+let MIN_NODES = 3;
+let MAX_NODES = 10;
+let MAX_ADDITIONAL_EDGES = 5;
+let VALUE_RADIUS = 5;
+let WINNABLE_PERCENTAGE = 1;
+
 let network;
 let current_data;
 let reset_nodes;
 let sum;
 
 $(() => {
+
+    $("#maxNodes").val(MAX_NODES);
+    $("#minNodes").val(MIN_NODES);
+    $("#maxAddEdges").val(MAX_ADDITIONAL_EDGES);
+    $("#valueRadius").val(VALUE_RADIUS);
+    $("#winnablePercentage").val(WINNABLE_PERCENTAGE);
+
     let container = $('#content')[0];
 
     let data = generateRandomGraph();
@@ -20,7 +33,7 @@ $(() => {
     newGraph();
 
     network.on("selectNode", object => {
-        if ($("#clickAction option:checked").attr("id") == 0) {
+        if ($("#clickAction").attr("data-value") == 0) {
             giveFromSelection(object);
         } else {
             takeIntoSelection(object);
@@ -28,22 +41,18 @@ $(() => {
         network.unselectAll();
         checkIfWin();
     });
+
 });
 
-const MIN_NODES = 3;
-const MAX_NODES = 20 - MIN_NODES;
-const MAX_ADDITIONAL_EDGES = 10;
-const MAX_VALUE_RADIUS = 5;
-
 function generateRandomGraph() {
-    const nodes = Math.floor(Math.random() * MAX_NODES + MIN_NODES);
+    const nodes = Math.floor(Math.random() * (MAX_NODES - MIN_NODES) + MIN_NODES);
     const additional_edges = Math.floor(Math.random() * (MAX_ADDITIONAL_EDGES + nodes));
     let data_nodes = [];
     let data_edges = [];
     let current_sum = 0;
     for (let i = 0; i < nodes; i++) {
-        let adder = -current_sum + 1;
-        let val = Math.floor(Math.random() * 2 * MAX_VALUE_RADIUS - MAX_VALUE_RADIUS + adder);
+        let adder = -current_sum;
+        let val = Math.floor(Math.random() * 2 * VALUE_RADIUS - VALUE_RADIUS + adder);
         current_sum += val;
         data_nodes.push({id: i + 1, label: "" + val});
         if (i !== 0)
@@ -67,13 +76,16 @@ function generateRandomGraph() {
 }
 
 function newGraph() {
+    MAX_NODES = parseInt($("#maxNodes").val());
+    MIN_NODES = parseInt($("#minNodes").val());
+    MAX_ADDITIONAL_EDGES = parseInt($("#maxAddEdges").val());
+    VALUE_RADIUS = parseInt($("#valueRadius").val());
+    WINNABLE_PERCENTAGE = parseFloat($("#winnablePercentage").val());
+
     do {
         current_data = generateRandomGraph();
-    } while (current_data.edges.length - current_data.nodes.length + 1 > sum && Math.random() * 10 < 8);
+    } while (current_data.edges.length - current_data.nodes.length + 1 > sum && Math.random() < WINNABLE_PERCENTAGE);
     network.setData(current_data);
-    console.info("current sum: ", sum);
-    console.info("current nodes: ", current_data.nodes.length);
-    console.info("current edges: ", current_data.nodes.length);
 }
 
 function takeIntoSelection(data) {
@@ -119,4 +131,13 @@ function checkIfWin() {
 function resetGraph() {
     current_data.nodes.clear();
     current_data.nodes.add(reset_nodes);
+}
+
+function toggleClickAction() {
+    let button = $("#clickAction");
+    let curVal = parseInt(button.attr("data-value"));
+    let newVal = (curVal + 1) % 2;
+    let text = ["Give money to connected node", "Take money from connected node"];
+    button.attr("data-value", newVal);
+    button.html(text[newVal]);
 }
