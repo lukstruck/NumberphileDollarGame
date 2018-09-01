@@ -11,6 +11,8 @@ let sum;
 
 let menuShown = false;
 
+let currentTutorialProgress = 0;
+
 let tutorialGraphs = [
     {
         nodes: new vis.DataSet([{id: 1, label: "-1"}, {id: 2, label: "1"}]),
@@ -46,15 +48,22 @@ let tutorialGraphs = [
     },
 ];
 
-generationMethod = generateCircleWithOffspring;
+generationMethod = () => {
+    if(currentTutorialProgress < tutorialGraphs.length)
+        return tutorialGraphs[currentTutorialProgress];
+    else
+        return generateRandomGraph();
+};
 
 $(() => {
 
+    currentTutorialProgress = parseInt(Cookies.get("tutorial_progress"));
     $("#maxNodes").val(MAX_NODES);
     $("#minNodes").val(MIN_NODES);
     $("#maxAddEdges").val(MAX_ADDITIONAL_EDGES);
     $("#valueRadius").val(VALUE_RADIUS);
     $("#winnablePercentage").val(WINNABLE_PERCENTAGE);
+    $("#tutorialProgess").val(currentTutorialProgress);
 
     let container = $('#content')[0];
 
@@ -97,64 +106,6 @@ $(() => {
     $("#settings").hide();
 });
 
-function generateEvenCircle() {
-    let data_nodes = [
-        {id: 1, label: "-5"},
-        {id: 2, label: "4"},
-        {id: 3, label: "-1"},
-        {id: 4, label: "3"},
-    ];
-
-    let data_edges = [
-        {from: 1, to: 2},
-        {from: 3, to: 2},
-        {from: 3, to: 4},
-        {from: 1, to: 4},
-    ];
-
-    reset_nodes = data_nodes;
-    return {
-        nodes: new vis.DataSet(data_nodes),
-        edges: new vis.DataSet(data_edges)
-    };
-
-}
-
-function generateUnevenCircle() {
-
-    let data_nodes = [
-        {id: 1, label: "-5"},
-        {id: 2, label: "4"},
-        {id: 3, label: "-1"},
-        {id: 4, label: "2"},
-        {id: 5, label: "1"},
-    ];
-
-    let data_edges = [
-        {from: 1, to: 2},
-        {from: 3, to: 2},
-        {from: 3, to: 4},
-        {from: 5, to: 4},
-        {from: 5, to: 1},
-    ];
-
-    reset_nodes = data_nodes;
-    return {
-        nodes: new vis.DataSet(data_nodes),
-        edges: new vis.DataSet(data_edges)
-    };
-}
-
-function generateCircleWithOffspring() {
-    let data = generateUnevenCircle();
-    data.nodes.add({id: 6, label: "0"});
-    data.edges.add({from: 5, to: 6});
-
-    reset_nodes = data.nodes.get();
-    return data;
-}
-
-
 function generateRandomGraph() {
     const nodes = Math.floor(Math.random() * (MAX_NODES - MIN_NODES) + MIN_NODES);
     const additional_edges = Math.floor(Math.random() * (MAX_ADDITIONAL_EDGES + nodes));
@@ -192,6 +143,7 @@ function newGraph() {
     MAX_ADDITIONAL_EDGES = parseInt($("#maxAddEdges").val());
     VALUE_RADIUS = parseInt($("#valueRadius").val());
     WINNABLE_PERCENTAGE = parseFloat($("#winnablePercentage").val());
+    currentTutorialProgress = parseInt($("#tutorialProgess").val());
 
     do {
         // current_data = generateRandomGraph();
@@ -238,6 +190,9 @@ function checkIfWin() {
     if (t.length === 0) {
         current_data.nodes.add({id: 0, label: "WIN!", color: "green", size: 100, shape: "star"});
         console.info("WIN!");
+        currentTutorialProgress++;
+        $("#tutorialProgess").val(currentTutorialProgress);
+        Cookies.set("tutorial_progress", currentTutorialProgress);
     }
 }
 
@@ -269,3 +224,4 @@ function colorNodes() {
 function changeMenuIcon(x) {
     x.classList.toggle("change");
 }
+
