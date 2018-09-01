@@ -1,14 +1,117 @@
-.grid-parent {
-    display: grid;
-    grid-template-columns: 640px 200px;
+
+body {
+    background-color: #FFFFFF;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-#content {
-    grid-row: 1 /span 4;
+.header {
+    overflow: hidden;
+    background-color: #CBE86B;
+    width: 100%;
+    padding: 20px 10px;
+    margin: 0;
+}
+
+.header a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+    line-height: 25px;
+    border-radius: 4px;
+}
+
+.header a.logo {
+    font-weight: bold;
+}
+
+.header a:hover {
+    background-color: #1C140D;
+    color: #F2E9E1;
+}
+
+.header a.active {
+    background-color: dodgerblue;
+    color: white;
+}
+
+.header-right {
+    float: right;
+}
+
+@media screen and (max-width: 500px) {
+    .header a {
+        font-size: 25em;
+        float: none;
+        display: block;
+        text-align: left;
+    }
+
+    .header-right {
+        float: none;
+    }
+}
+
+.grid-parent {
+    display: grid;
+    grid-template-areas: 'newGraph   resetGraph  empty1  toggleMode' 'graph      graph       graph   graph' 'empty2     empty2      empty2  winConditions';
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+.newGraph {
+    grid-area: newGraph;
+}
+
+.resetGraph {
+    grid-area: resetGraph;
+}
+
+.toggleModeDescription {
+    grid-area: toggleModeDescription;
+}
+
+.toggleMode {
+    grid-area: toggleMode;
+    width: 25%;
+}
+
+.graph {
+    padding-top: 50px;
+    grid-area: graph;
+    height: 700px;
+}
+
+.empty2 {
+    grid-area: empty2;
+}
+
+.empty1 {
+    grid-area: empty1;
+}
+
+.winConditions {
+    grid-area: winConditions;
+}
+
+.grid-parent button {
+    border: none;
+    height: 70px;
+    font-size: 2em;
+}
+
+.grid-parent button:hover {
+    border: none;
+    height: 70px;
+    font-size: 2em;
+    background-color: #1C140D;
+    color: #F2E9E1;
 }
 
 .child {
-    margin: 10px;
     width: 100%;
 }
 
@@ -23,3 +126,39 @@
 .form input {
     height: 13px;
 }
+
+.menuParent {
+    float: right;
+    margin-right: 50px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.menuMini {
+    width: 35px;
+    height: 5px;
+    background-color: black;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+#settings {
+}
+
+/* Rotate first bar */
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+/* Fade out the second bar */
+.change .bar2 {
+    opacity: 0;
+}
+
+/* Rotate last bar */
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+}
+

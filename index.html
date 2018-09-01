@@ -11,45 +11,50 @@
     <script src="ndg/ndg.js"></script>
     <link href="ndg/ndg.css" rel="stylesheet">
 
-
-    <style type="text/css">
-        #content {
-            width: 600px;
-            height: 400px;
-            border: 1px solid lightgray;
-        }
-    </style>
 </head>
 <body>
 
-<header>
-    <h1>Numberphile Dollar Game</h1>
+<header class="header">
+    <h1><a href="#game">Numberphile Dollar Game</a></h1>
+    <h2><a href="#game">Numberphile Dollar Game Video</a></h2>
+    <div id="menu" class="menuParent" onclick="changeMenuIcon(this)">
+        <div class="menuMini bar1"></div>
+        <div class="menuMini bar2"></div>
+        <div class="menuMini bar3"></div>
+    </div>
 </header>
-<section class="grid-parent">
-    <div id="content" class="child">
+<section id="settings" class="form">
 
-    </div>
-    <button class="child" onclick="newGraph()">New Graph</button>
-    <button class="child" onclick="resetGraph()">Reset Graph</button>
-    <div class="child">
-        <label for="clickAction">
-            Click to toggle what happens when you click on a node:
-        </label>
-        <button id="clickAction" onclick="toggleClickAction()" data-value="0">Give money to conncected node</button>
-    </div>
-    <div class="child">
+    <label for="maxNodes">Maximum nodes:</label><input id="maxNodes">
+    <label for="minNodes">Minimum nodes:</label><input id="minNodes">
+    <label for="maxAddEdges">Maximum additional edges:</label><input id="maxAddEdges">
+    <label for="valueRadius">Approximate value radius for nodes:</label><input id="valueRadius">
+    <label for="winnablePercentage">Percentage that the graph fits the win condition:</label><input
+        id="winnablePercentage">
+
+</section>
+<section id="game" class="grid-parent">
+    <button class="child newGraph" onclick="newGraph()">New Graph</button>
+    <button class="child resetGraph" onclick="resetGraph()">Reset Graph</button>
+    <!--label for="clickAction" class="child toggleModeDescription">
+        Click to toggle what happens when you click on a node:
+    </label-->
+    <button id="clickAction" onclick="toggleClickAction()" data-value="0" class="child toggleMode">Give money
+        to conncected node
+    </button>
+    <div class="child winConditions">
         <h3>Winning conditions:</h3>
         Edges - Nodes + 1 <= Sum<br>
         AND <br>
         Sum >= 0
     </div>
-    <div class="child form">
-        <label for="maxNodes">Maximum nodes:</label><input id="maxNodes">
-        <label for="minNodes">Minimum nodes:</label><input id="minNodes">
-        <label for="maxAddEdges">Maximum additional edges:</label><input id="maxAddEdges">
-        <label for="valueRadius">Approximate value radius for nodes:</label><input id="valueRadius">
-        <label for="winnablePercentage">Percentage that the graph fits the win condition:</label><input id="winnablePercentage">
-    </div>
+    <div class="child empty2"></div>
+    <div class="child empty1"></div>
+    <div class="child graph" id="content"></div>
+</section>
+<section id="video">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/U33dsEcKgeQ?rel=0" frameborder="0"
+            allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </section>
 <footer>
     made by Lukas Struck

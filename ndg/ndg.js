@@ -9,6 +9,45 @@ let current_data;
 let reset_nodes;
 let sum;
 
+let menuShown = false;
+
+let tutorialGraphs = [
+    {
+        nodes: new vis.DataSet([{id: 1, label: "-1"}, {id: 2, label: "1"}]),
+        edges: new vis.DataSet([{from: 1, to: 2}]),
+    },
+    {
+        nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "4"}]),
+        edges: new vis.DataSet([{from: 1, to: 2}]),
+    },
+    {
+        nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "6"}]),
+        edges: new vis.DataSet([{from: 1, to: 2}]),
+    },
+    {
+        nodes: new vis.DataSet([{id: 1, label: "2"}, {id: 2, label: "-4"}, {id: 3, label: "2"}]),
+        edges: new vis.DataSet([{from: 1, to: 2}, {from: 2, to: 3}]),
+    },
+    {
+        nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "4"}, {id: 3, label: "3"}, {id: 4, label: "-1"}]),
+        edges: new vis.DataSet([{from: 1, to: 2}, {from: 2, to: 3}, {from: 3, to: 4}, {from: 4, to: 1}]),
+    },
+    {
+        nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "4"}, {id: 3, label: "3"}, {id: 4, label: "-1"}, {id: 5, label: "0"}]),
+        edges: new vis.DataSet([{from: 1, to: 2}, {from: 2, to: 3}, {from: 3, to: 4}, {from: 4, to: 5}, {from: 5, to: 1}]),
+    },
+    {
+        nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "4"}, {id: 3, label: "3"}, {id: 4, label: "-1"}, {id: 5, label: "0"}, {id: 6, label: "1"}]),
+        edges: new vis.DataSet([{from: 1, to: 2}, {from: 2, to: 3}, {from: 3, to: 4}, {from: 4, to: 5}, {from: 5, to: 1}, {from: 4, to: 6}]),
+    },
+    {
+        nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "4"}, {id: 3, label: "3"}, {id: 4, label: "-1"}, {id: 5, label: "0"}, {id: 6, label: "1"}, {id: 7, label: "-1"}]),
+        edges: new vis.DataSet([{from: 1, to: 2}, {from: 2, to: 3}, {from: 3, to: 4}, {from: 4, to: 5}, {from: 5, to: 1}, {from: 4, to: 6}, {from: 1, to: 7}]),
+    },
+];
+
+generationMethod = generateCircleWithOffspring;
+
 $(() => {
 
     $("#maxNodes").val(MAX_NODES);
@@ -19,7 +58,8 @@ $(() => {
 
     let container = $('#content')[0];
 
-    let data = generateRandomGraph();
+    // let data = generateRandomGraph();
+    let data = generationMethod();
     let options = {
         autoResize: true,
         interaction: {
@@ -45,7 +85,73 @@ $(() => {
         checkIfWin();
     });
 
+    $("#menu").click(() => {
+        let settings = $("#settings");
+        if (menuShown)
+            settings.hide();
+        else
+            settings.show();
+        menuShown = !menuShown;
+    });
+
+    $("#settings").hide();
 });
+
+function generateEvenCircle() {
+    let data_nodes = [
+        {id: 1, label: "-5"},
+        {id: 2, label: "4"},
+        {id: 3, label: "-1"},
+        {id: 4, label: "3"},
+    ];
+
+    let data_edges = [
+        {from: 1, to: 2},
+        {from: 3, to: 2},
+        {from: 3, to: 4},
+        {from: 1, to: 4},
+    ];
+
+    reset_nodes = data_nodes;
+    return {
+        nodes: new vis.DataSet(data_nodes),
+        edges: new vis.DataSet(data_edges)
+    };
+
+}
+
+function generateUnevenCircle() {
+
+    let data_nodes = [
+        {id: 1, label: "-5"},
+        {id: 2, label: "4"},
+        {id: 3, label: "-1"},
+        {id: 4, label: "2"},
+        {id: 5, label: "1"},
+    ];
+
+    let data_edges = [
+        {from: 1, to: 2},
+        {from: 3, to: 2},
+        {from: 3, to: 4},
+        {from: 5, to: 4},
+        {from: 5, to: 1},
+    ];
+
+    reset_nodes = data_nodes;
+    return {
+        nodes: new vis.DataSet(data_nodes),
+        edges: new vis.DataSet(data_edges)
+    };
+}
+
+function generateCircleWithOffspring() {
+    let data = generateUnevenCircle();
+    data.nodes.add({id: 6, label: "0"});
+    data.edges.add({from: 5, to: 6});
+    return data;
+}
+
 
 function generateRandomGraph() {
     const nodes = Math.floor(Math.random() * (MAX_NODES - MIN_NODES) + MIN_NODES);
@@ -86,9 +192,11 @@ function newGraph() {
     WINNABLE_PERCENTAGE = parseFloat($("#winnablePercentage").val());
 
     do {
-        current_data = generateRandomGraph();
+        // current_data = generateRandomGraph();
+        current_data = generationMethod();
     } while (current_data.edges.length - current_data.nodes.length + 1 > sum && Math.random() < WINNABLE_PERCENTAGE);
     network.setData(current_data);
+    colorNodes();
 }
 
 function takeIntoSelection(data) {
@@ -134,23 +242,28 @@ function checkIfWin() {
 function resetGraph() {
     current_data.nodes.clear();
     current_data.nodes.add(reset_nodes);
+    colorNodes();
 }
 
 function toggleClickAction() {
     let button = $("#clickAction");
     let curVal = parseInt(button.attr("data-value"));
     let newVal = (curVal + 1) % 2;
-    let text = ["Give money to connected node", "Take money from connected node"];
+    let text = ["Give money to connected nodes", "Take money from connected nodes"];
     button.attr("data-value", newVal);
     button.html(text[newVal]);
 }
 
-function colorNodes(){
+function colorNodes() {
     current_data.nodes.get().forEach(node => {
-        if(parseInt(node.label) < 0)
+        if (parseInt(node.label) < 0)
             node.color = "LightCoral";
         else
             node.color = "LightGreen";
         current_data.nodes.update(node);
     })
+}
+
+function changeMenuIcon(x) {
+    x.classList.toggle("change");
 }
