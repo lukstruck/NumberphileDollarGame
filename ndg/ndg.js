@@ -62,6 +62,8 @@ generationMethod = () => {
 $(() => {
 
     currentTutorialProgress = parseInt(Cookies.get("tutorial_progress"));
+    if(isNaN(currentTutorialProgress))
+        currentTutorialProgress = 0;
     $("#maxNodes").val(MAX_NODES);
     $("#minNodes").val(MIN_NODES);
     $("#maxAddEdges").val(MAX_ADDITIONAL_EDGES);
