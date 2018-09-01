@@ -1,5 +1,6 @@
 let network;
 let current_data;
+let reset_nodes;
 let sum;
 
 $(() => {
@@ -58,6 +59,7 @@ function generateRandomGraph() {
         }
     }
     sum = current_sum;
+    reset_nodes = data_nodes;
     return {
         nodes: new vis.DataSet(data_nodes),
         edges: new vis.DataSet(data_edges)
@@ -112,4 +114,9 @@ function checkIfWin() {
         current_data.nodes.add({id: 0, label: "WIN!"});
         console.info("WIN!");
     }
+}
+
+function resetGraph() {
+    current_data.nodes.clear();
+    current_data.nodes.add(reset_nodes);
 }
