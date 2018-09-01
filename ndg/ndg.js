@@ -31,6 +31,8 @@ $(() => {
 // initialize your network!
     network = new vis.Network(container, data, options);
     newGraph();
+    colorNodes();
+    checkIfWin();
 
     network.on("selectNode", object => {
         if ($("#clickAction").attr("data-value") == 0) {
@@ -39,6 +41,7 @@ $(() => {
             takeIntoSelection(object);
         }
         network.unselectAll();
+        colorNodes();
         checkIfWin();
     });
 
@@ -123,7 +126,7 @@ function checkIfWin() {
         }
     });
     if (t.length === 0) {
-        current_data.nodes.add({id: 0, label: "WIN!"});
+        current_data.nodes.add({id: 0, label: "WIN!", color: "green", size: 100, shape: "star"});
         console.info("WIN!");
     }
 }
@@ -140,4 +143,14 @@ function toggleClickAction() {
     let text = ["Give money to connected node", "Take money from connected node"];
     button.attr("data-value", newVal);
     button.html(text[newVal]);
+}
+
+function colorNodes(){
+    current_data.nodes.get().forEach(node => {
+        if(parseInt(node.label) < 0)
+            node.color = "LightCoral";
+        else
+            node.color = "LightGreen";
+        current_data.nodes.update(node);
+    })
 }
