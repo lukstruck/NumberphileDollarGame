@@ -149,6 +149,8 @@ function generateCircleWithOffspring() {
     let data = generateUnevenCircle();
     data.nodes.add({id: 6, label: "0"});
     data.edges.add({from: 5, to: 6});
+
+    reset_nodes = data.nodes.get();
     return data;
 }
 
@@ -249,7 +251,7 @@ function toggleClickAction() {
     let button = $("#clickAction");
     let curVal = parseInt(button.attr("data-value"));
     let newVal = (curVal + 1) % 2;
-    let text = ["Give money to connected nodes", "Take money from connected nodes"];
+    let text = ["Give money to connected nodes  ", "Take money from connected nodes"];
     button.attr("data-value", newVal);
     button.html(text[newVal]);
 }

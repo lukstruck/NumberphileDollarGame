@@ -57,62 +57,57 @@ body {
 
 .grid-parent {
     display: grid;
-    grid-template-areas: 'newGraph   resetGraph  empty1  toggleMode' 'graph      graph       graph   graph' 'empty2     empty2      empty2  winConditions';
+    /*grid-template-areas: 'newGraph   resetGraph  toggleMode  toggleMode' 'graph      graph       graph   graph' 'empty2     empty2      empty2  winConditions';*/
+    grid-template-areas: '28% 28% 44%';
     grid-gap: 20px;
     padding: 20px;
 }
 
 .newGraph {
-    grid-area: newGraph;
+    grid-column: 1;
 }
 
 .resetGraph {
-    grid-area: resetGraph;
-}
-
-.toggleModeDescription {
-    grid-area: toggleModeDescription;
+    grid-column: 2;
 }
 
 .toggleMode {
-    grid-area: toggleMode;
-    width: 25%;
+    grid-column: 3;
+    width: 430px;
+    justify-self: end;
 }
 
 .graph {
     padding-top: 50px;
-    grid-area: graph;
+    grid-column: 1 /span 3;
+    grid-row: 2;
     height: 700px;
 }
 
-.empty2 {
-    grid-area: empty2;
-}
-
-.empty1 {
-    grid-area: empty1;
+.empty {
+    grid-row: 3;
+    grid-column: 1 / span 3;
 }
 
 .winConditions {
-    grid-area: winConditions;
+    grid-column: 3;
+    grid-row: 3;
+    justify-self: end;
 }
 
 .grid-parent button {
     border: none;
     height: 70px;
-    font-size: 2em;
+    font-size: 1.5em;
+    background-color: lightgrey;
 }
 
 .grid-parent button:hover {
-    border: none;
-    height: 70px;
-    font-size: 2em;
     background-color: #1C140D;
     color: #F2E9E1;
 }
 
 .child {
-    width: 100%;
 }
 
 .form {
@@ -161,4 +156,5 @@ body {
     -webkit-transform: rotate(45deg) translate(-8px, -8px);
     transform: rotate(45deg) translate(-8px, -8px);
 }
+
 
