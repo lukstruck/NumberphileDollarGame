@@ -151,7 +151,7 @@ $(() => {
         },
         "physics": {
             "barnesHut": {
-                "centralGravity": 2,
+                "centralGravity": 0.5,
                 "springLength": 10,
                 "springConstant": 0,
                 "damping": 0.18,
