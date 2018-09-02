@@ -200,7 +200,7 @@ $(() => {
 
     let dd = $("#progressDropdown");
     tutorialGraphs.forEach((graph, index) => {
-        dd.append("<a class=\"dropdown-item\" href=\"#\" onclick=\"changeCurrentLevel(this)\" data-value=\"" + index + "\">" + graph.name + "</a>\n");
+        dd.append("<a class=\"dropdown-item\" href=\"#\" onclick=\"changeCurrentLevel(this)\" data-value=\"" + index + "\">" + index + ": " + graph.name + "</a>\n");
     })
 });
 
@@ -286,7 +286,7 @@ function adjustParameters() {
     $("#maxNodes").val(Math.floor(currentTutorialProgress * 0.2 + 10));
     $("#minNodes").val(Math.floor(currentTutorialProgress * 0.15 + 3));
     $("#maxAddEdges").val(Math.floor(currentTutorialProgress * 0.175 + 5));
-    $("#valueRadius").val(Math.floor(3 + currentTutorialProgress/5));
+    $("#valueRadius").val(Math.floor(3 + currentTutorialProgress / 5));
     $("#winnablePercentage").val((10 / Math.sqrt(currentTutorialProgress)));
 }
 
