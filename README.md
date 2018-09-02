@@ -1,6 +1,8 @@
 # NumberphileDollarGame
 A simple implementation of the "Dollar Game" shown on the YouTube channel "Numberphile" with HTML and JS.
 
+A Demo is available at <lukace.space/main/>
+
 ## Installation
 ```
 git clone https://github.com/lukstruck/NumberphileDollarGame.git
