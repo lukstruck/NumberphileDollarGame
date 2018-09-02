@@ -15,6 +15,23 @@ body {
 }
 
 .header a {
+    color: black;
+    text-align: center;
+    padding: 20px;
+    text-decoration: none;
+    line-height: 25px;
+    border-radius: 4px;
+    height: 40px;
+    align-items: baseline;
+}
+
+.header a:hover {
+    background-color: #1C140D;
+    color: #F2E9E1;
+}
+
+/*
+.header a {
     float: left;
     color: black;
     text-align: center;
@@ -53,56 +70,34 @@ body {
     .header-right {
         float: none;
     }
-}
+}*/
 
-.grid-parent {
-    display: grid;
-    /*grid-template-areas: 'newGraph   resetGraph  toggleMode  toggleMode' 'graph      graph       graph   graph' 'empty2     empty2      empty2  winConditions';*/
-    grid-template-areas: '28% 28% 44%';
-    grid-gap: 20px;
-    padding: 20px;
+@media screen and (max-device-height: 700px){
+    .graph {
+        height: 500px;
+    }
 }
-
-.newGraph {
-    grid-column: 1;
-}
-
-.resetGraph {
-    grid-column: 2;
-}
-
-.toggleMode {
-    grid-column: 3;
-    width: 430px;
-    justify-self: end;
+@media screen and (min-device-height: 701px){
+    .graph {
+        height: 600px;
+    }
 }
 
 .graph {
-    padding-top: 50px;
-    grid-column: 1 /span 3;
-    grid-row: 2;
-    height: 700px;
+    border: 1px solid lightgrey;
+    margin-top: 20px;
 }
 
-.empty {
-    grid-row: 3;
-    grid-column: 1 / span 3;
-}
-
-.winConditions {
-    grid-column: 3;
-    grid-row: 3;
-    justify-self: end;
-}
-
-.grid-parent button {
+.button {
+    width: 100%;
+    margin-top: 20px;
     border: none;
     height: 70px;
     font-size: 1.5em;
     background-color: lightgrey;
 }
 
-.grid-parent button:hover {
+.button:hover {
     background-color: #1C140D;
     color: #F2E9E1;
 }
