@@ -13,48 +13,120 @@ let menuShown = false;
 
 let currentTutorialProgress = 0;
 
+let currentLevelWon = false;
+
 let tutorialGraphs = [
     {
+        name: "Introduction",
+        nodes: new vis.DataSet([{id: 1, label: "Welcome to the\nNumberphile Dollar Game!", shape: "box", x: 0, y: 0}, {
+            id: 2,
+            label: "If you don't know anything about it,\ncheck out the video at the bottom of the page,\nor click the 'Numberphile Dollar Game Video' link on the top.",
+            shape: "box", x: 200, y: 0
+        }, {
+            id: 3,
+            label: "To get to the next stage, get\nevery node to a value of greater or equal to 0\nand press 'new Graph' when you're finished.",
+            shape: "box",
+            y: 100
+        }, {
+            id: 4,
+            label: "You can click on nodes to perform the action\nstated on the button to the top right of this.\nYou can toggle the option\nby clicking on the button.",
+            shape: "box",
+            y: 150
+        }, {
+            id: 5,
+            label: "Now click on a random node to start the game!\n(Note: you will still have to click 'new Graph' to get to the next level')",
+            shape: "box",
+            y: 200
+        }]),
+        edges: new vis.DataSet([{from: 1, to: 2, arrows: 'to'}, {from: 2, to: 3, arrows: 'to'}, {
+            from: 3,
+            to: 4,
+            arrows: 'to'
+        }, {
+            from: 4,
+            to: 5,
+            arrows: 'to'
+        }]),
+    },
+    {
+        name: "Your first network",
         nodes: new vis.DataSet([{id: 1, label: "-1"}, {id: 2, label: "1"}]),
         edges: new vis.DataSet([{from: 1, to: 2}]),
     },
     {
+        name: "Higher values are also possible",
         nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "4"}]),
         edges: new vis.DataSet([{from: 1, to: 2}]),
     },
     {
+        name: "The sum must not always be 0, it can be higher",
         nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "6"}]),
         edges: new vis.DataSet([{from: 1, to: 2}]),
     },
     {
+        name: "The network can be larger than just two nodes",
         nodes: new vis.DataSet([{id: 1, label: "2"}, {id: 2, label: "-4"}, {id: 3, label: "2"}]),
         edges: new vis.DataSet([{from: 1, to: 2}, {from: 2, to: 3}]),
     },
     {
+        name: "It can even contain circles",
         nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "4"}, {id: 3, label: "3"}, {id: 4, label: "-1"}]),
         edges: new vis.DataSet([{from: 1, to: 2}, {from: 2, to: 3}, {from: 3, to: 4}, {from: 4, to: 1}]),
     },
     {
-        nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "4"}, {id: 3, label: "3"}, {id: 4, label: "-1"}, {id: 5, label: "0"}]),
-        edges: new vis.DataSet([{from: 1, to: 2}, {from: 2, to: 3}, {from: 3, to: 4}, {from: 4, to: 5}, {from: 5, to: 1}]),
+        name: "And bigger, uneven circles",
+        nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "4"}, {id: 3, label: "3"}, {
+            id: 4,
+            label: "-1"
+        }, {id: 5, label: "0"}]),
+        edges: new vis.DataSet([{from: 1, to: 2}, {from: 2, to: 3}, {from: 3, to: 4}, {from: 4, to: 5}, {
+            from: 5,
+            to: 1
+        }]),
     },
     {
-        nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "4"}, {id: 3, label: "3"}, {id: 4, label: "-1"}, {id: 5, label: "0"}, {id: 6, label: "1"}]),
-        edges: new vis.DataSet([{from: 1, to: 2}, {from: 2, to: 3}, {from: 3, to: 4}, {from: 4, to: 5}, {from: 5, to: 1}, {from: 4, to: 6}]),
+        name: "There can be combined structures",
+        nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "4"}, {id: 3, label: "3"}, {
+            id: 4,
+            label: "-1"
+        }, {id: 5, label: "0"}, {id: 6, label: "1"}]),
+        edges: new vis.DataSet([{from: 1, to: 2}, {from: 2, to: 3}, {from: 3, to: 4}, {from: 4, to: 5}, {
+            from: 5,
+            to: 1
+        }, {from: 4, to: 6}]),
     },
     {
-        nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "4"}, {id: 3, label: "3"}, {id: 4, label: "-1"}, {id: 5, label: "0"}, {id: 6, label: "1"}, {id: 7, label: "-1"}]),
-        edges: new vis.DataSet([{from: 1, to: 2}, {from: 2, to: 3}, {from: 3, to: 4}, {from: 4, to: 5}, {from: 5, to: 1}, {from: 4, to: 6}, {from: 1, to: 7}]),
+        name: "With lots of sub structures",
+        nodes: new vis.DataSet([{id: 1, label: "-4"}, {id: 2, label: "4"}, {id: 3, label: "3"}, {
+            id: 4,
+            label: "-1"
+        }, {id: 5, label: "0"}, {id: 6, label: "1"}, {id: 7, label: "-1"}]),
+        edges: new vis.DataSet([{from: 1, to: 2}, {from: 2, to: 3}, {from: 3, to: 4}, {from: 4, to: 5}, {
+            from: 5,
+            to: 1
+        }, {from: 4, to: 6}, {from: 1, to: 7}]),
     },
     {
-        nodes: new vis.DataSet([{id: 1, label: "2"}, {id: 2, label: "1"}, {id: 3, label: "1"}, {id: 4, label: "-9"}, {id: 5, label: "4"}, {id: 6, label: "4"}]),
-        edges: new vis.DataSet([{id: 2, from: 1, to: 2}, {id: 3, from: 1, to: 3}, {id: 4, from: 2, to: 4}, {id: 5, from: 3, to: 5}, {id: 6, from: 2, to: 6}])
+        name: "Sometimes, there are big chains",
+        nodes: new vis.DataSet([{id: 1, label: "2"}, {id: 2, label: "1"}, {id: 3, label: "1"}, {
+            id: 4,
+            label: "-9"
+        }, {id: 5, label: "4"}, {id: 6, label: "4"}]),
+        edges: new vis.DataSet([{id: 2, from: 1, to: 2}, {id: 3, from: 1, to: 3}, {id: 4, from: 2, to: 4}, {
+            id: 5,
+            from: 3,
+            to: 5
+        }, {id: 6, from: 2, to: 6}])
     }
 ];
 
 generationMethod = () => {
-    if(currentTutorialProgress < tutorialGraphs.length)
+    if (currentTutorialProgress < tutorialGraphs.length) {
+        if (reset_nodes && current_data)
+            resetGraph();
+        reset_nodes = tutorialGraphs[currentTutorialProgress].nodes.get();
         return tutorialGraphs[currentTutorialProgress];
+    }
     else
         return generateRandomGraph();
 };
@@ -62,13 +134,9 @@ generationMethod = () => {
 $(() => {
 
     currentTutorialProgress = parseInt(Cookies.get("tutorial_progress"));
-    if(isNaN(currentTutorialProgress))
+    if (isNaN(currentTutorialProgress))
         currentTutorialProgress = 0;
-    $("#maxNodes").val(MAX_NODES);
-    $("#minNodes").val(MIN_NODES);
-    $("#maxAddEdges").val(MAX_ADDITIONAL_EDGES);
-    $("#valueRadius").val(VALUE_RADIUS);
-    $("#winnablePercentage").val(WINNABLE_PERCENTAGE);
+    adjustParameters();
     $("#tutorialProgess").val(currentTutorialProgress);
 
     let container = $('#content')[0];
@@ -80,23 +148,40 @@ $(() => {
         interaction: {
             navigationButtons: true,
             dragNodes: false,
-            dragView: false,
-            zoomView: false,
-        }
+        },
+        "physics": {
+            "barnesHut": {
+                "centralGravity": 2.85,
+                "springLength": 10,
+                "springConstant": 0,
+                "damping": 0.18,
+                "avoidOverlap": 1
+            },
+            "maxVelocity": 10,
+            "minVelocity": 0.12,
+            "timestep": 0.7
+        },
+        edges: {
+            smooth: {
+                enabled: true,
+                type: "discrete"
+            }
+        },
     };
 
 // initialize your network!
     network = new vis.Network(container, data, options);
     newGraph();
     colorNodes();
-    checkIfWin();
 
     network.on("selectNode", object => {
-        if ($("#clickAction").attr("data-value") == 0) {
-            giveFromSelection(object);
-        } else {
-            takeIntoSelection(object);
-        }
+        let label = current_data.nodes.get(object.nodes[0]).label;
+        if (!isNaN(parseInt(label)))
+            if ($("#clickAction").attr("data-value") == 0) {
+                giveFromSelection(object);
+            } else {
+                takeIntoSelection(object);
+            }
         network.unselectAll();
         colorNodes();
         checkIfWin();
@@ -112,6 +197,11 @@ $(() => {
     });
 
     $("#settings").hide();
+
+    let dd = $("#progressDropdown");
+    tutorialGraphs.forEach((graph, index) => {
+        dd.append("<a class=\"dropdown-item\" href=\"#\" onclick=\"changeCurrentLevel(this)\" data-value=\"" + index + "\">" + graph.name + "</a>\n");
+    })
 });
 
 function generateRandomGraph() {
@@ -146,12 +236,14 @@ function generateRandomGraph() {
 }
 
 function newGraph() {
+    adjustParameters();
     MAX_NODES = parseInt($("#maxNodes").val());
     MIN_NODES = parseInt($("#minNodes").val());
     MAX_ADDITIONAL_EDGES = parseInt($("#maxAddEdges").val());
     VALUE_RADIUS = parseInt($("#valueRadius").val());
     WINNABLE_PERCENTAGE = parseFloat($("#winnablePercentage").val());
     currentTutorialProgress = parseInt($("#tutorialProgess").val());
+    Cookies.set("tutorial_progress", currentTutorialProgress);
 
     do {
         // current_data = generateRandomGraph();
@@ -159,6 +251,7 @@ function newGraph() {
     } while (current_data.edges.length - current_data.nodes.length + 1 > sum && Math.random() < WINNABLE_PERCENTAGE);
     network.setData(current_data);
     colorNodes();
+    currentLevelWon = false;
 }
 
 function takeIntoSelection(data) {
@@ -189,18 +282,28 @@ function giveFromSelection(data) {
     });
 }
 
+function adjustParameters() {
+    $("#maxNodes").val(Math.floor(currentTutorialProgress * 0.2 + 10));
+    $("#minNodes").val(Math.floor(currentTutorialProgress * 0.15 + 3));
+    $("#maxAddEdges").val(Math.floor(currentTutorialProgress * 0.175 + 5));
+    $("#valueRadius").val(Math.floor(3 + currentTutorialProgress/5));
+    $("#winnablePercentage").val((10 / Math.sqrt(currentTutorialProgress)));
+}
+
 function checkIfWin() {
     let t = current_data.nodes.get({
         filter: node => {
             return parseInt(node.label) < 0
         }
     });
-    if (t.length === 0) {
+    if (t.length === 0 && !currentLevelWon) {
         current_data.nodes.add({id: 0, label: "WIN!", color: "green", size: 100, shape: "star"});
         console.info("WIN!");
         currentTutorialProgress++;
+        adjustParameters();
         $("#tutorialProgess").val(currentTutorialProgress);
         Cookies.set("tutorial_progress", currentTutorialProgress);
+        currentLevelWon = true;
     }
 }
 
@@ -208,6 +311,7 @@ function resetGraph() {
     current_data.nodes.clear();
     current_data.nodes.add(reset_nodes);
     colorNodes();
+    currentLevelWon = false;
 }
 
 function toggleClickAction() {
@@ -221,11 +325,13 @@ function toggleClickAction() {
 
 function colorNodes() {
     current_data.nodes.get().forEach(node => {
-        if (parseInt(node.label) < 0)
-            node.color = "LightCoral";
-        else
-            node.color = "LightGreen";
-        current_data.nodes.update(node);
+        if (parseInt(node.label) !== NaN) {
+            if (parseInt(node.label) < 0)
+                node.color = "LightCoral";
+            else
+                node.color = "LightGreen";
+            current_data.nodes.update(node);
+        }
     })
 }
 
@@ -233,3 +339,7 @@ function changeMenuIcon(x) {
     x.classList.toggle("change");
 }
 
+function changeCurrentLevel(button) {
+    console.dir(button);
+    $("#tutorialProgess").val(button.getAttribute("data-value"));
+}

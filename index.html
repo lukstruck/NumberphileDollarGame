@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, shrink-to-fit=no">
 
     <title>Numberphile Dollar Game</title>
 
@@ -57,8 +57,9 @@
         icon in the top right again.
     </div>
     <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="tutorialProgessL">Tutorial Progress: (set to big number to skip)</span>
+        <div class="input-group-prepend"><button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tutorial Progress: (set to big number to skip)</button>
+            <div class="dropdown-menu" id="progressDropdown">
+            </div>
         </div>
         <input id="tutorialProgess" type="text" class="form-control" placeholder="0 (start from beginning)"
                aria-label="Tutorial Progress" aria-describedby="tutorialProgessL">
@@ -93,7 +94,7 @@
     </div>
     <div class="input-group mb-3">
         <div class="input-group-prepend">
-            <span class="input-group-text" id="winnablePercentageL">Percentage of graphs that fit the win condition (0-1):</span>
+            <span class="input-group-text" id="winnablePercentageL">Percentage of graphs that are winnable (0-1):</span>
         </div>
         <input id="winnablePercentage" type="text" class="form-control" placeholder="1"
                aria-label="Percentage of winnable games" aria-describedby="winnablePercentageL">
@@ -129,7 +130,7 @@
     </div>
 </section>
 <section id="video" class="container">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/U33dsEcKgeQ?rel=0" frameborder="0"
+    <iframe src="https://www.youtube.com/embed/U33dsEcKgeQ?rel=0" frameborder="0"
             allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </section>
 <footer>

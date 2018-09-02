@@ -30,62 +30,26 @@ body {
     color: #F2E9E1;
 }
 
-/*
-.header a {
-    float: left;
-    color: black;
-    text-align: center;
-    padding: 20px;
-    text-decoration: none;
-    line-height: 25px;
-    border-radius: 4px;
+
+.graph { /* min-device-height not working? */
+    border: 1px solid lightgrey;
+    margin-top: 20px;
 }
 
-.header a.logo {
-    font-weight: bold;
-}
-
-.header a:hover {
-    background-color: #1C140D;
-    color: #F2E9E1;
-}
-
-.header a.active {
-    background-color: dodgerblue;
-    color: white;
-}
-
-.header-right {
-    float: right;
-}
-
-@media screen and (max-width: 500px) {
-    .header a {
-        font-size: 25em;
-        float: none;
-        display: block;
-        text-align: left;
-    }
-
-    .header-right {
-        float: none;
-    }
-}*/
-
-@media screen and (max-device-height: 700px){
+@media screen and (max-height: 599px){
     .graph {
-        height: 500px;
+        height: 200px;
     }
 }
-@media screen and (min-device-height: 701px){
+@media screen and (min-height: 600px) and (max-height: 799px){
+    .graph {
+        height: 400px;
+    }
+}
+@media screen and (min-height: 800px){
     .graph {
         height: 600px;
     }
-}
-
-.graph {
-    border: 1px solid lightgrey;
-    margin-top: 20px;
 }
 
 .button {
@@ -102,21 +66,6 @@ body {
     color: #F2E9E1;
 }
 
-.child {
-}
-
-.form {
-    display: grid;
-    grid-template-columns: 100px 25px 100px 25px;
-    padding: 10px;
-    grid-gap: 10px;
-    align-items: end;
-}
-
-.form input {
-    height: 13px;
-}
-
 .menuParent {
     float: right;
     margin-right: 50px;
@@ -130,9 +79,6 @@ body {
     background-color: black;
     margin: 6px 0;
     transition: 0.4s;
-}
-
-#settings {
 }
 
 /* Rotate first bar */
