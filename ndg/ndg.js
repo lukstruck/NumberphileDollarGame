@@ -237,12 +237,6 @@ function generateRandomGraph() {
 
 function newGraph() {
     adjustParameters();
-    MAX_NODES = parseInt($("#maxNodes").val());
-    MIN_NODES = parseInt($("#minNodes").val());
-    MAX_ADDITIONAL_EDGES = parseInt($("#maxAddEdges").val());
-    VALUE_RADIUS = parseInt($("#valueRadius").val());
-    WINNABLE_PERCENTAGE = parseFloat($("#winnablePercentage").val());
-    currentTutorialProgress = parseInt($("#tutorialProgess").val());
     Cookies.set("tutorial_progress", currentTutorialProgress);
 
     do {
@@ -283,11 +277,11 @@ function giveFromSelection(data) {
 }
 
 function adjustParameters() {
-    $("#maxNodes").val(Math.floor(currentTutorialProgress * 0.2 + 10));
-    $("#minNodes").val(Math.floor(currentTutorialProgress * 0.15 + 3));
-    $("#maxAddEdges").val(Math.floor(currentTutorialProgress * 0.175 + 5));
-    $("#valueRadius").val(Math.floor(3 + currentTutorialProgress / 5));
-    $("#winnablePercentage").val((10 / Math.sqrt(currentTutorialProgress)));
+    MAX_NODES = Math.floor(currentTutorialProgress * 0.2 + 10);
+    MIN_NODES = (Math.floor(currentTutorialProgress * 0.15 + 3));
+    MAX_ADDITIONAL_EDGES = (Math.floor(currentTutorialProgress * 0.175 + 5));
+    VALUE_RADIUS = (Math.floor(3 + currentTutorialProgress / 5));
+    WINNABLE_PERCENTAGE = (10 / Math.sqrt(currentTutorialProgress));
 }
 
 function checkIfWin() {
@@ -340,6 +334,5 @@ function changeMenuIcon(x) {
 }
 
 function changeCurrentLevel(button) {
-    console.dir(button);
     $("#tutorialProgess").val(button.getAttribute("data-value"));
 }
