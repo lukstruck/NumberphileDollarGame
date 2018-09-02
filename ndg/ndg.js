@@ -136,8 +136,8 @@ $(() => {
     currentTutorialProgress = parseInt(Cookies.get("tutorial_progress"));
     if (isNaN(currentTutorialProgress))
         currentTutorialProgress = 0;
-    adjustParameters();
     $("#tutorialProgess").val(currentTutorialProgress);
+    adjustParameters();
 
     let container = $('#content')[0];
 
@@ -277,6 +277,7 @@ function giveFromSelection(data) {
 }
 
 function adjustParameters() {
+    currentTutorialProgress = parseInt($("#tutorialProgess").val());
     MAX_NODES = Math.floor(currentTutorialProgress * 0.2 + 10);
     MIN_NODES = (Math.floor(currentTutorialProgress * 0.15 + 3));
     MAX_ADDITIONAL_EDGES = (Math.floor(currentTutorialProgress * 0.175 + 5));
@@ -294,8 +295,8 @@ function checkIfWin() {
         current_data.nodes.add({id: 0, label: "WIN!", color: "green", size: 100, shape: "star"});
         console.info("WIN!");
         currentTutorialProgress++;
-        adjustParameters();
         $("#tutorialProgess").val(currentTutorialProgress);
+        adjustParameters();
         Cookies.set("tutorial_progress", currentTutorialProgress);
         currentLevelWon = true;
     }
